@@ -41,10 +41,17 @@ jobs:
       - name: Download Repo
         uses: actions/checkout@v4
 
-      - name: Download Artifacts
+      - name: Download SSH Private Key
         uses: actions/download-artifact@v4
         with:
+          name: tf-key.pem
           path: ./ansible
+  
+      - name: download hosts file
+        uses: actions/download-artifact@v4
+        with:
+          name: hosts
+          path: ./ansible/hosts
 
 
       - run: ansible --version
