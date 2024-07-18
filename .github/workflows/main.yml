@@ -1,9 +1,6 @@
 name: terraform ansible CI
 
-on: 
-  push:
-    paths: 
-    - 'terraform-ansible'
+on: [push]
 
 jobs:
   build:
