@@ -1,4 +1,14 @@
 terraform {
+
+  backend "s3" {
+    bucket         = "tf-backend-240718" # REPLACE WITH YOUR BUCKET NAME
+    key            = "terraform.tfstate"
+    region         = "eu-central-1"
+    dynamodb_table = "terraform-state-locking"
+    encrypt        = true
+    profile        = "techstarter"
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -15,18 +25,18 @@ provider "aws" {
 }
 
 module "create_vpc" {
-  source = "./modules/vpc"
+  source       = "./modules/vpc"
   project_name = "${var.env}-${var.project_name}"
-  vpc_cidr = var.vpc_cidr
-  subnet_cidr = var.subnet_cidr
+  vpc_cidr     = var.vpc_cidr
+  subnet_cidr  = var.subnet_cidr
 }
 
 module "create_ec2" {
-  source = "./modules/ec2"
-  project_name = var.project_name
-  ami = var.ami
+  source        = "./modules/ec2"
+  project_name  = var.project_name
+  ami           = var.ami
   instance_type = var.instance_type
-  subnet_id = module.create_vpc.subnet_id
-  vpc_id = module.create_vpc.vpc_id
-  key_name = aws_key_pair.deployer.id
+  subnet_id     = module.create_vpc.subnet_id
+  vpc_id        = module.create_vpc.vpc_id
+  key_name      = aws_key_pair.deployer.id
 }
