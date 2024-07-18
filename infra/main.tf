@@ -21,7 +21,6 @@ terraform {
 provider "aws" {
   region                   = "eu-central-1"
   profile                  = "techstarter"
-  shared_credentials_files = ["credentials.txt"]
 }
 
 module "create_vpc" {
