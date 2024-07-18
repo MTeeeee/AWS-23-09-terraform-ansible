@@ -48,6 +48,7 @@ jobs:
 
 
       - run: ansible --version
+      - run: ls ./ansible
       - run: |
           mkdir -p ~/.ssh
           cp ./ansible/tf-key.pem ~/.ssh/tf-key.pem
