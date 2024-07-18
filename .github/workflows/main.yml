@@ -48,5 +48,13 @@ jobs:
 
 
       - run: ansible --version
+      - run: |
+          mkdir -p ~/.ssh
+          cp ./ansible/tf-key.pem ~/.ssh/tf-key.pem
+          chmod 600 ~/.ssh/tf-key.pem
+          echo "Host *" > ~/.ssh/config
+          echo "  IdentityFile ~/.ssh/tf-key.pem" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+
       - run: ansible-playbook -i hosts playbook.yml
         working-directory: ./ansible
