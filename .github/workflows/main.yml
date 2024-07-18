@@ -45,5 +45,6 @@ jobs:
         with:
           path: ./ansible
 
-      - name: Ansible
-        run: ansible --version
+
+      - run: ansible --version
+      - run: ansible all -i ./inventory/hosts -m ping
