@@ -3,7 +3,7 @@ name: terraform ansible CI
 on: [push]
 
 jobs:
-  build:
+  terraform:
 
     runs-on: ubuntu-latest
 
@@ -28,3 +28,22 @@ jobs:
         with:
           name: "tf-key.pem"
           path: "./ansible/tf-key.pem"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "hosts"
+          path: "./ansible/hosts"
+
+  ansible:
+    runs-on: ubuntu-latest
+        
+    steps:
+      - name: Download Repo
+        uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./ansible
+
+      - name: Ansible
+        run: ansible --version
