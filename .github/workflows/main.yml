@@ -24,3 +24,7 @@ jobs:
       - run: terraform -chdir=./infra init
       - run: terraform -chdir=./infra validate
       - run: terraform -chdir=./infra apply -auto-approve
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "tf-key.pem"
+          path: "./ansible/tf-key.pem"
